@@ -1,11 +1,21 @@
 import express, { Request, Response } from 'express';
+import 'dotenv/config';
+import pool from './db/connection';
+import query from './db/connection';
+import { usersSelect } from './db';
 
-// const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
-app.get('/', (req: Request , res: Response) => {
-  res.send('<h1>My finance app</h1>');
+// app.get('/', async (req: Request , res: Response) => {
+//   const users = await query('SELECT * FROM users where id = ?', [1]);
+
+  
+//   res.send(users);
+// })
+
+app.get('/', (req, res) => {
+  res.send(usersSelect);
 })
 
 app.listen(port, () => {
