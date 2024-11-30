@@ -1,22 +1,18 @@
 import express, { Request, Response } from 'express';
 import 'dotenv/config';
-import pool from './db/connection';
-import query from './db/connection';
-import { usersSelect } from './db';
+
+//Router de users
+import userRouter from './routes/user.routes';
 
 const app = express();
 const port = process.env.PORT || 3000;
 
-// app.get('/', async (req: Request , res: Response) => {
-//   const users = await query('SELECT * FROM users where id = ?', [1]);
-
-  
-//   res.send(users);
-// })
-
 app.get('/', (req, res) => {
-  res.send(usersSelect);
+  res.send('<h1> My Finance </h1>')
 })
+
+// Ruta de users, lo ideal sería hacerlo con routing, estructuramos mejor nuestro código
+app.use('/users', userRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
