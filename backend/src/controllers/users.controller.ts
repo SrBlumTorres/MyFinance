@@ -1,10 +1,15 @@
 import { Request, RequestHandler, Response } from 'express';
 import userModel from "../models/user.model";
 
-// El controler interactua direct
 async function getAllUsers(req: Request, res: Response){
     const usersResponse = await userModel.getAll();
-     res.send(usersResponse);
+    res.send(usersResponse);
 }
 
-export { getAllUsers };
+async function getUserById(req: Request, res: Response){
+    const userId = Number(req.params.id);
+    const userUserByIdResponse = await userModel.getUserById(userId);
+    res.send(userUserByIdResponse);
+}
+
+export { getAllUsers, getUserById };
