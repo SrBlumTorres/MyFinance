@@ -10,7 +10,7 @@ function TransactionCard(props: TransactionProps) {
 
     return (
 
-        <div className="flex flex-col w-1/6 border-black border-solid ">
+        <div className="flex flex-col w-1/6 border-black border-solid border-w">
             <div>
                 <h3>{props.title}</h3>
             </div>
