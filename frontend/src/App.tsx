@@ -6,7 +6,7 @@ function App() {
 
   return (
     <>
-      <main>
+      <main className='flex'>
         <Header />
         <Dashboard />
       </main>
