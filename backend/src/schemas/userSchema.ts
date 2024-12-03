@@ -4,7 +4,12 @@
 
 import { z } from 'zod';
 
-// Orientado a insertar
+const IdUserSchema = z.coerce.number({
+  invalid_type_error: 'The ID must be a number',
+});
+
+
+// Orientado a validar
 // Atributos de la DB, tabla users
 const AddUserSchema = z.object({
     name: z
@@ -22,8 +27,15 @@ const AddUserSchema = z.object({
       .max(16, 'Max 16 characters'),
 });
 
+// Con pick mantenemos ciertas props
+const UserLogin = AddUserSchema.pick({
+    email: true,
+    password: true,
+});
+
 type AddUserType = z.infer<typeof AddUserSchema>;
+type UserLoginType = z.infer<typeof UserLogin>;
 
-export { AddUserSchema };
+export { AddUserSchema, IdUserSchema, UserLogin};
 
-export type { AddUserType };
+export type { AddUserType, UserLoginType};

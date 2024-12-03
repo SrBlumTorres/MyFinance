@@ -9,8 +9,11 @@ import cors from 'cors';
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
 app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5500', 
+  credentials: true,
+}));
 
 app.get('/', (req, res) => {
   res.sendFile('index.html', { root: path.join(process.cwd(), 'public') });
@@ -22,9 +25,7 @@ app.use('/users', userRouter);
 // Middleware de manejo de errores
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
   console.log('❌', error.message)
-
   res.status(500).send({ message: error.message })
-
 })
 
 app.listen(port, () => {

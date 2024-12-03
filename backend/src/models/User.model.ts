@@ -4,10 +4,17 @@ import { users } from '../db/schema';
 import { eq } from 'drizzle-orm';
 import { AddUserType } from '../schemas/userSchema';
 
+
 // Constante con conexión
 const db = drizzle(process.env.DATABASE_URL!);
 
 class UserModel {
+
+    async checkEmail(userEmail: string){
+        const [user] = await db.select().from(users).where(eq(users.email, userEmail));
+        return user;
+    }
+
     //SELECT de todos los users
     async getAll() {
         const usersData = await db.select().from(users);

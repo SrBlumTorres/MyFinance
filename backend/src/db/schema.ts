@@ -9,7 +9,7 @@ export const users = pgTable("users", {
 	id: serial().primaryKey().notNull(),
 	name: varchar({ length: 50 }).notNull(),
 	email: varchar({ length: 50 }).notNull(),
-	password: varchar({ length: 50 }),
+	password: varchar({ length: 50 }).notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow(),
 	modifiedAt: timestamp("modified_at", { mode: 'string' }).defaultNow(),
 }, (table) => {
