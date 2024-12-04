@@ -5,6 +5,7 @@ function Header() {
   return (
     <>
         <header className="flex w-1/5 flex-col justify-between bg-primary min-h-screen">
+          <br />
           <Logo/>
           <Menu />
             <ul className="gap-1">

@@ -1,9 +1,10 @@
-import { VscGraph } from "react-icons/vsc";
+// import { VscGraph } from "react-icons/vsc";
+import { MdOutlineAutoGraph } from "react-icons/md";
 
 function Logo() {
   return (
     <div className="">
-        <VscGraph className="w-14 h-14 bg-1bde89"/>
+        <MdOutlineAutoGraph className="w-14 h-14 bg-1bde89"/>
     </div>
   )
 }
