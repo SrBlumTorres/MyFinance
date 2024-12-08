@@ -1,14 +1,12 @@
+import AppRoutes from "./config/AppRoutes";
 import './App.css';
-import Header from './components/header/Header';
-import Dashboard from './pages/Dashboard';
 
 function App() {
 
   return (
     <>
       <main className='flex'>
-        <Header />
-        <Dashboard />
+        <AppRoutes />
       </main>
     </>
   )
