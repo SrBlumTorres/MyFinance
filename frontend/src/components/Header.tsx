@@ -8,7 +8,7 @@ function Header() {
   return (
     <>
         <header className="flex w-[18%] max-h-screen flex-col px-6 py-4 bg-primary min-h-screen">
-          <div className='flex mb-8 items-center gap-2'>
+          <div className='flex mb-20 items-center gap-2'>
             <Logo size='40'/>
             <AppTitleName />
           </div>

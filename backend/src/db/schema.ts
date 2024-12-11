@@ -9,7 +9,7 @@ export const users = pgTable("users", {
 	id: serial().primaryKey().notNull(),
 	name: varchar({ length: 50 }).notNull(),
 	email: varchar({ length: 50 }).notNull(),
-	password: varchar({ length: 50 }).notNull(),
+	password: varchar({ length: 150 }).notNull(),
 	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow(),
 	modifiedAt: timestamp("modified_at", { mode: 'string' }).defaultNow(),
 }, (table) => {
@@ -40,6 +40,7 @@ export const transactions = pgTable("transactions", {
 	categoryId: integer("category_id"),
 	date: date().default(sql`CURRENT_DATE`),
 	description: varchar({ length: 150 }),
+	amount: integer().notNull()
 }, (table) => {
 	return {
 		transactionsUserIdFkey: foreignKey({

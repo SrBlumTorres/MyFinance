@@ -3,6 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, AddLoginType } from "../schemas/loginSchema";
 import Input from "./ui/custom/Input";
 import Button from "./ui/custom/Button";
+import axios from "axios";
 
 type LoginFormValues = AddLoginType;
 
@@ -15,7 +16,16 @@ function Form() {
     
     // Axios?? 
     function onSubmit(data: LoginFormValues) {
-        console.log(JSON.stringify(data));
+        return JSON.stringify(
+            axios({
+                method: 'post',
+                url: import.meta.env.VITE_BACKEND_ENDPOINT + '/users/login',
+                data: {
+                  email: data.email,
+                  password: data.password
+                }
+            })
+        );
     }
 
     return (

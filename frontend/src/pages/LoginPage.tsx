@@ -14,7 +14,7 @@ function LoginPage() {
 
         <div className="flex">
           <section className="flex flex-col w-1/2">
-            <div className="w-8/12 m-auto">
+            <div className="w-3/5 m-auto">
               <h1 className="text-center">Sign in</h1>
               <p className="text-center mb-8">Welcome to MyFinance App, log in an enjoy of your best finance management</p>
               <Form />

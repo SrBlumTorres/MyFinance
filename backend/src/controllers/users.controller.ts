@@ -6,6 +6,7 @@ import { log } from 'console';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import ValidationError from '../models/ValidationError';
+import HttpError from '../models/HttpErrors';
 
 
 async function login(req: Request, res: Response){
@@ -19,7 +20,7 @@ async function login(req: Request, res: Response){
         const user = await userModel.checkEmail(userCredentialsLogin.email);
     
         // En caso de error en respesta en el server
-        if (!user) res.status(404).json({ message: 'Email or password not found' });
+        if (!user) throw new HttpError(404, 'Email or password not found' );
         
         // Ya sabemos quue el usuario existe ahora hay que comprobar que la contraseña que me pases sea correcta
         const isPasswordCorrect = await bcrypt.compare(
@@ -27,7 +28,7 @@ async function login(req: Request, res: Response){
             user.password
         );
 
-        if (!isPasswordCorrect) res.status(404).json({ message: 'Email or password not found' })
+        if (!isPasswordCorrect) throw new HttpError(404, 'Email or password not found' )
 
         const userToSend = {
             id: user.id,
@@ -51,7 +52,7 @@ async function login(req: Request, res: Response){
 
     } catch (error) {
         console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        throw new HttpError(500, 'Internal server error' );
     }
 
 }
@@ -63,13 +64,12 @@ async function getAllUsers(req: Request, res: Response){
         res.send(usersResponse);
     } catch (error) {
         console.error('Error fetching users:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        throw new HttpError(500, 'Internal server error' );
     }
 }
 
 async function getUserById(req: Request, res: Response){
     try {
-
         const userId = req.params.id;
         const {success, data: id , error} = IdUserSchema.safeParse(userId);
     
@@ -77,16 +77,16 @@ async function getUserById(req: Request, res: Response){
         if (!success) throw new ValidationError(error);
         
         const userByIdResponse = await userModel.getUserById(id);
-
-        if (!userByIdResponse) return res.status(404).json({ message: 'User not found' })
+        
+        if (!userByIdResponse) throw new HttpError(404, 'User not found' );
 
         // La llamada ha sido exitosa
         res.status(200).json(userByIdResponse);
         
     } catch (error) {
         console.error('Error fetching user:', error);
-        res.status(500).json({ message: 'Internal server error' });
-    }    
+        throw new HttpError(500, 'Internal server error' );
+    }   
 }
 
 async function createUser(req: Request, res: Response){

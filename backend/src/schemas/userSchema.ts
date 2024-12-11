@@ -27,7 +27,7 @@ const AddUserSchema = z.object({
       .max(16, 'Max 16 characters'),
 });
 
-// Con pick mantenemos ciertas props
+// Con pick mantenemos las props que queramos
 const UserLogin = AddUserSchema.pick({
     email: true,
     password: true,
