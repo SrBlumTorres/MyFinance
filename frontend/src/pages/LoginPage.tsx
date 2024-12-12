@@ -1,5 +1,5 @@
 import AppTitleName from "../components/AppTitleName";
-import Form from "../components/Form";
+import LoginForm from "../components/LoginForm";
 import Logo from "../components/Logo";
 
 function LoginPage() {
@@ -17,7 +17,7 @@ function LoginPage() {
             <div className="w-3/5 m-auto">
               <h1 className="text-center">Sign in</h1>
               <p className="text-center mb-8">Welcome to MyFinance App, log in an enjoy of your best finance management</p>
-              <Form />
+              <LoginForm />
             </div>
           </section>
 

@@ -1,7 +1,6 @@
 
 type ContainerBoxProps = {
     className?: string,
-    
 }
 
 function ContainerBox(props: ContainerBoxProps) {

@@ -1,24 +1,9 @@
-import { pgTable, unique, serial, varchar, timestamp, foreignKey, integer, date, pgEnum } from "drizzle-orm/pg-core"
+import { pgTable, foreignKey, serial, integer, varchar, date, timestamp, unique, pgEnum } from "drizzle-orm/pg-core"
 import { sql } from "drizzle-orm"
 
 export const enumCategory = pgEnum("enum_category", ['income', 'expense', 'debt'])
 export const enumDebt = pgEnum("enum_debt", ['owed', 'receivable'])
 
-
-export const users = pgTable("users", {
-	id: serial().primaryKey().notNull(),
-	name: varchar({ length: 50 }).notNull(),
-	surname: varchar({ length: 50 }).notNull(),
-	second_surname: varchar({ length: 50 }),
-	email: varchar({ length: 50 }).notNull(),
-	password: varchar({ length: 150 }).notNull(),
-	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow(),
-	modifiedAt: timestamp("modified_at", { mode: 'string' }).defaultNow(),
-}, (table) => {
-	return {
-		usersEmailKey: unique("users_email_key").on(table.email),
-	}
-});
 
 export const categories = pgTable("categories", {
 	id: serial().primaryKey().notNull(),
@@ -31,24 +16,6 @@ export const categories = pgTable("categories", {
 			columns: [table.userId],
 			foreignColumns: [users.id],
 			name: "categories_user_id_fkey"
-		}).onUpdate("cascade").onDelete("cascade"),
-	}
-});
-
-export const transactions = pgTable("transactions", {
-	id: serial().primaryKey().notNull(),
-	userId: integer("user_id"),
-	type: enumCategory(),
-	categoryId: integer("category_id"),
-	date: date().default(sql`CURRENT_DATE`),
-	description: varchar({ length: 150 }),
-	amount: integer().notNull()
-}, (table) => {
-	return {
-		transactionsUserIdFkey: foreignKey({
-			columns: [table.userId],
-			foreignColumns: [users.id],
-			name: "transactions_user_id_fkey"
 		}).onUpdate("cascade").onDelete("cascade"),
 	}
 });
@@ -109,5 +76,38 @@ export const budgets = pgTable("budgets", {
 			foreignColumns: [users.id],
 			name: "budgets_user_id_fkey"
 		}).onUpdate("cascade").onDelete("cascade"),
+	}
+});
+
+export const transactions = pgTable("transactions", {
+	id: serial().primaryKey().notNull(),
+	userId: integer("user_id").notNull(),
+	type: enumCategory().notNull(),
+	categoryId: integer("category_id"),
+	date: date().default(sql`CURRENT_DATE`).notNull(),
+	description: varchar({ length: 150 }),
+	amount: integer().notNull(),
+}, (table) => {
+	return {
+		transactionsUserIdFkey: foreignKey({
+			columns: [table.userId],
+			foreignColumns: [users.id],
+			name: "transactions_user_id_fkey"
+		}).onUpdate("cascade").onDelete("cascade"),
+	}
+});
+
+export const users = pgTable("users", {
+	id: serial().primaryKey().notNull(),
+	name: varchar({ length: 50 }).notNull(),
+	email: varchar({ length: 50 }).notNull(),
+	password: varchar({ length: 60 }).notNull(),
+	createdAt: timestamp("created_at", { mode: 'string' }).defaultNow(),
+	modifiedAt: timestamp("modified_at", { mode: 'string' }).defaultNow(),
+	surname: varchar({ length: 50 }).notNull(),
+	secondSurname: varchar("second_surname", { length: 50 }),
+}, (table) => {
+	return {
+		usersEmailKey: unique("users_email_key").on(table.email),
 	}
 });

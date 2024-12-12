@@ -1,31 +1,33 @@
+import axios, { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, AddLoginType } from "../schemas/loginSchema";
 import Input from "./ui/custom/Input";
 import Button from "./ui/custom/Button";
-import axios from "axios";
+import axiosClient from "../config/axiosClient";
+import useUserContext from "../hooks/useUserContext";
 
 type LoginFormValues = AddLoginType;
 
-function Form() {
+function LoginForm() {
+    const { logIn } = useUserContext();
     // Extraemos los métodos de useForm, un custom hook de "react-hook-form"
     const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
         mode: "onChange", // Valida mientras el usuario escribe
         resolver: zodResolver(loginSchema),
     });
     
-    // Axios?? 
-    function onSubmit(data: LoginFormValues) {
-        return JSON.stringify(
-            axios({
-                method: 'post',
-                url: import.meta.env.VITE_BACKEND_ENDPOINT + '/users/login',
-                data: {
-                  email: data.email,
-                  password: data.password
-                }
-            })
-        );
+    // Axios
+    async function onSubmit(data: LoginFormValues) {
+        try {
+            const resp = await axiosClient.post('/users/login', data);
+            logIn(resp.data);
+        } catch (error) {
+            console.log(error)
+            if(error instanceof AxiosError ){
+                console.log(error.response?.data)
+            }
+        }
     }
 
     return (
@@ -53,4 +55,4 @@ function Form() {
 
 }
 
-export default Form
+export default LoginForm

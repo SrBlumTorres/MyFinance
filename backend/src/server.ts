@@ -7,6 +7,8 @@ import cookieParser from 'cookie-parser'
 //Router de users
 import userRouter from './routes/user.routes';
 import transactionRouter from './routes/transaction.routes';
+import ValidationError from './models/ValidationError';
+import HttpError from './models/HttpErrors';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -34,7 +36,26 @@ app.use('/transactions', transactionRouter);
 // TODO Crear modelo  
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
   console.log('❌', error.message)
-  res.status(500).send({ message: error.message })
+
+  if (error instanceof ValidationError) {
+    res.status(error.statusCode).send({
+      message: error.message,
+      errors: error.errors,
+    });
+    return;
+  }
+  if (error instanceof HttpError) {
+    res.status(error.statusCode).send({
+      message: error.message,
+    });
+    return;
+  }
+
+  if (error instanceof Error) {
+    res.status(500).send({
+      message: error.message,
+    });
+  }
 })
 
 

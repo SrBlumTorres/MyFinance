@@ -10,15 +10,16 @@ import HttpError from '../models/HttpErrors';
 
 
 async function login(req: Request, res: Response){
+
     // Mail por un lado, password por otro
     try {
         const userCredentials = req.body;
         const {success, data: userCredentialsLogin, error} = UserLogin.safeParse(userCredentials);
-    
+        
         if (!success) throw new ValidationError(error);
         // Comprobamos email en BBDD
         const user = await userModel.checkEmail(userCredentialsLogin.email);
-    
+        
         // En caso de error en respesta en el server
         if (!user) throw new HttpError(404, 'Email or password not found' );
         
@@ -43,7 +44,7 @@ async function login(req: Request, res: Response){
 
         res.cookie('access_token', token, {
             httpOnly: true,
-            maxAge: 60 * 60 * 24, // 1 day,
+            maxAge: 1000 * 60 * 60 * 24, // 1 day,
             sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', //.env
             secure: true,
         });
