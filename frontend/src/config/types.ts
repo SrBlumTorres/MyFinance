@@ -12,6 +12,7 @@ type User = {
 
 type Transaction = {
     id?: number;
+    userId?: number;
     type: string;
     categoryId?: number;
     date: Date;

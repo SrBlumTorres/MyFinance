@@ -1,4 +1,4 @@
-import { Request, RequestHandler, Response } from 'express';
+import { Request, Response } from 'express';
 // import userModel from "../models/User.model";
 import { UserLogin, AddUserSchema, IdUserSchema } from '../schemas/userSchema';
 import userModel from '../models/User.model';
@@ -96,10 +96,10 @@ async function createUser(req: Request, res: Response){
     
     // Validación de respuesta con ZOD, ZOD nos devuelve estos 3 params
     const { success, data, error } = AddUserSchema.safeParse(newUserData);
-
+    
     // Los errores debo controlarlos con un modelo, ya que este en concrerto es de lo que recibo, no de una acción del servidor
     if (!success) throw new ValidationError(error); 
-
+    
     // Como sabemos que ha ido bien, ahora ya podemos encriptar la contraseña, bcrypt, librería
     const saltNumber = 10;
     const encryptedPassword = await bcrypt.hash(data.password, saltNumber);
@@ -109,6 +109,7 @@ async function createUser(req: Request, res: Response){
 
     try {
         const createUserResponse = await userModel.createUser(data);
+    
         // Respuesta, obligatoria indicar el tipo, en este caso 201
         res.status(201).send(createUserResponse);
     } catch (error) {

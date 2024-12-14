@@ -11,7 +11,6 @@ function userAuth(
   ) {
     // Extraer el token de las cookies enviadas en la solicitud
     const token = req.cookies.access_token;
-  
     
     // Si no hay token, lanzar un error indicando que es necesario autenticar
     if (!token) {

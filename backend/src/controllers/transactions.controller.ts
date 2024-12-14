@@ -8,7 +8,6 @@ import { ExtendedRequest } from "../config/types";
 
 async function getAllUserTransactions(req: ExtendedRequest, res: Response) {
     try {
-
         //Si llega aquí si o si existe
         const user = req.currentUser;
         

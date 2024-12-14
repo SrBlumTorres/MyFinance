@@ -1,9 +1,15 @@
+import { ReactNode } from "react"
 
+type ContainerProps = {
+    children?: ReactNode;
+}
 
-function Container() {
+function Container(props: ContainerProps) {
+
+    const { children } =  props;
     return (
         <div className="flex grow min-h-screen bg-green-300">
-            Container
+            {children}
         </div>
     )
 }

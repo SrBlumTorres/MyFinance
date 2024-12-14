@@ -32,6 +32,7 @@ class UserModel {
         // Desesctructuramos el primer registro 
         const [insertUser] =  await db.insert(users).values({
             name: newUserData.name,
+            surname: newUserData.surname,
             email: newUserData.email,
             password: newUserData.password
         }).returning();

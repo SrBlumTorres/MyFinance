@@ -4,12 +4,15 @@ import { BrowserRouter } from "react-router-dom";
 import './index.css'
 import App from './App.tsx'
 import UserProvider from './contexts/userProvider.tsx';
+import TransactionProvider from './contexts/transactionProvider.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter >
       <UserProvider>
-        <App />
+        <TransactionProvider>
+          <App />
+        </TransactionProvider>
       </UserProvider>
     </BrowserRouter>
   </StrictMode>,
