@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { twMerge } from "tailwind-merge";
 
 type ContainerBoxProps = {
     className?: string,
@@ -7,10 +8,12 @@ type ContainerBoxProps = {
 
 function ContainerBox(props: ContainerBoxProps) {
   const {className, children} = props;
+  // Estilos base y en caso de tener adicionales los, junta o solapa
+  const classes = twMerge('flex', className )
 
   return (
 
-    <div className={className}>
+    <div className={classes}>
       {children}
     </div>
     

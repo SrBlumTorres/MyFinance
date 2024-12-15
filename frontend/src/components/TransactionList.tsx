@@ -1,25 +1,50 @@
 
 import useTransactionContext from '../hooks/useTransactionContext';
+import Button from './ui/custom/Button';
+import ContainerBox from './ui/custom/ContainerBox';
+import { IoIosAddCircleOutline } from "react-icons/io";
 
 function TransactionList() {
-  const { transactions } = useTransactionContext();
+    const { transactions } = useTransactionContext();
 
-  if (!transactions) return <p>Loading transactions...</p>;
+    if (!transactions) return <p>Loading transactions...</p>;
 
-  return (
-    <div>
-      <h2>Your Transactions</h2>
-      <ul>
-        {transactions.map((transaction) => (
-          <li key={transaction.id}>
-            <p>Type: {transaction.type}</p>
-            <p>Description: {transaction.description}</p>
-            <p>Amount: ${transaction.amount}</p>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div className='flex flex-col'>
+            <h2>Your Transactions</h2>
+            <ContainerBox className='flex flex-col gap-34'>
+                <div>
+                    <div className='flex'>
+                        <Button className='flex gap-4 p-3'>
+                            <IoIosAddCircleOutline size={15}/>
+                            <span>Date</span>
+                        </Button>
+                        <Button className='flex gap-4 p-3'>
+                            <IoIosAddCircleOutline size={15}/>
+                            <span>Amount</span>
+                        </Button>
+                        <Button className='flex gap-4 p-3'>
+                            <IoIosAddCircleOutline size={15}/>
+                            <span>Type</span>
+                        </Button>
+                        
+                    </div>
+
+                    <span>Transactions: {transactions.length} </span>
+                    {transactions.map((transaction) => (
+                        <div className='flex gap-3'>
+                            <span>{transaction.date}</span>
+                            <span key={transaction.id}>{transaction.id}</span>
+                            <span>Type: {transaction.type}</span>
+                            <span>Description: {transaction.description}</span>
+                            <span>Amount: ${transaction.amount}</span>
+                        </div>
+                    ))}
+                </div>
+            </ContainerBox>
+        </div>
+    );
+
 }
 
 export default TransactionList;

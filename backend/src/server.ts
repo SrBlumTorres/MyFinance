@@ -4,9 +4,10 @@ import 'dotenv/config';
 import 'express-async-errors';
 import cors from 'cors';
 import cookieParser from 'cookie-parser'
-//Router de users
+//Routers
 import userRouter from './routes/user.routes';
 import transactionRouter from './routes/transaction.routes';
+import categoryRouter from './routes/category.routes';
 import ValidationError from './models/ValidationError';
 import HttpError from './models/HttpErrors';
 
@@ -31,8 +32,10 @@ app.use('/users', userRouter);
 // Ruta de transacciones
 app.use('/transactions', transactionRouter);
 
-
+// Ruta de categorías
+app.use('/categories', categoryRouter);
 // Middleware de manejo de errores
+
 // TODO Crear modelo  
 app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
   console.log('❌', error.message)
