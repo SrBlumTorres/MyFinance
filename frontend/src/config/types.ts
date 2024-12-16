@@ -14,7 +14,7 @@ type Transaction = {
     id?: number;
     userId?: number;
     type: string;
-    categoryId?: number;
+    categoryName?: string;
     date: Date;
     description: string;
     amount: number;

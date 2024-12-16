@@ -34,10 +34,9 @@ function TransactionList() {
                     {transactions.map((transaction) => (
                         <div className='flex gap-3'>
                             <span>{transaction.date}</span>
-                            <span key={transaction.id}>{transaction.id}</span>
                             <span>Type: {transaction.type}</span>
-                            <span>Description: {transaction.description}</span>
-                            <span>Amount: ${transaction.amount}</span>
+                            <span>${transaction.amount}</span>
+                            <span>{transaction.categoryName}</span>
                         </div>
                     ))}
                 </div>
