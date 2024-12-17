@@ -31,18 +31,21 @@ async function createUserTransaction (req: ExtendedRequest, res: Response){
     try {
         //Recogida de datos
         const newTransactionData = req.body;
+        newTransactionData.userId = currentUser.id;
 
         //Validación de la correcta estructura de transaction mediante zod
         const { success, data, error } = transactionSchema.safeParse(newTransactionData);
 
+
         if (!success) throw new ValidationError(error);
 
+        
         const newTransactionResponse = await TransactionModel.createTransaction(data, currentUser);
 
         if (!newTransactionResponse) throw new HttpError(404, 'Cannot create transactiion')
 
         // Llamada exitosa
-        res.status(200).json(newTransactionResponse)
+        res.status(201).json(newTransactionResponse)
         
     } catch (error) {
         console.error('Error creating transaction:', error);

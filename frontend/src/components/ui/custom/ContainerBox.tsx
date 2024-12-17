@@ -9,7 +9,7 @@ type ContainerBoxProps = {
 function ContainerBox(props: ContainerBoxProps) {
   const {className, children} = props;
   // Estilos base y en caso de tener adicionales los, junta o solapa
-  const classes = twMerge('flex', className )
+  const classes = twMerge('flex rounded', className )
 
   return (
 

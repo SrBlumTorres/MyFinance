@@ -1,4 +1,4 @@
-
+// Entorno usuario
 type User = {
     id?: number;
     name: string;
@@ -10,11 +10,12 @@ type User = {
     updatedAt?: Date;
 };
 
+// Entorno de transacciones
 type Transaction = {
     id?: number;
     userId?: number;
     type: string;
-    categoryName?: string;
+    categoryName: string;
     date: Date;
     description: string;
     amount: number;

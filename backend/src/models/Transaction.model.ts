@@ -14,10 +14,10 @@ class TransactionModel {
             amount: transactions.amount,
             type: transactions.type,
             description: transactions.description,
-            name: categories.name
+            categoryName: categories.name
         })
             .from(transactions)
-            .leftJoin(categories, eq(transactions.id, categories.id))
+            .leftJoin(categories, eq(transactions.categoryId, categories.id))
             .where(eq(transactions.userId, userId))
             .orderBy(desc(transactions.date))
 
@@ -29,7 +29,7 @@ class TransactionModel {
         const [insertTransaction] = await db.insert(transactions).values({
             userId: currentUser.id,
             date: newTransactionData.date,
-            type: newTransactionData.description,
+            type: newTransactionData.type,
             categoryId: newTransactionData.category,
             amount: newTransactionData.amount,
             description: newTransactionData.description

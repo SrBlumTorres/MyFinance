@@ -8,7 +8,7 @@ function Container(props: ContainerProps) {
 
     const { children } =  props;
     return (
-        <div className="flex grow min-h-screen p-4">
+        <div className="flex grow min-h-screen p-6">
             {children}
         </div>
     )

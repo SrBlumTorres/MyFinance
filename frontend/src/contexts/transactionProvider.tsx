@@ -2,9 +2,11 @@ import { createContext, ReactNode, useState, useEffect } from 'react';
 import axiosClient from '../config/axiosClient';
 import { Transaction } from '../config/types';
 
+// 1. Definimos el tipo del contexto
 type TransactionContextType = {
   transactions: Transaction[] | null;
   fetchTransactions: () => Promise<void>;
+  addTransaction: (newTransaction: Transaction) => void;
 };
 
 const TransactionContext = createContext<TransactionContextType | null>(null);
@@ -16,6 +18,7 @@ type TransactionProviderProps = {
 function TransactionProvider({ children }: TransactionProviderProps) {
   const [transactions, setTransactions] = useState<Transaction[] | null>(null);
 
+  // Función para obtener transacciones desde la API
   async function fetchTransactions() {
     try {
       const response = await axiosClient.get('/transactions'); // Ruta de tu API
@@ -25,13 +28,22 @@ function TransactionProvider({ children }: TransactionProviderProps) {
     }
   }
 
+  // Función para agregar una nueva transacción
+  const addTransaction = (newTransaction: Transaction) => {
+    setTransactions((prevTransactions) => 
+      prevTransactions ? [...prevTransactions, newTransaction] : [newTransaction]
+    );
+  };
+
   useEffect(() => {
     fetchTransactions();
   }, []);
 
+  // Valor proporcionado por el contexto
   const valueForContext = {
     transactions,
     fetchTransactions,
+    addTransaction,
   };
 
   return (
