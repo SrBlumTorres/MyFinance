@@ -6,6 +6,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import { FiEdit } from "react-icons/fi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import TransactionDialog from './TransactionDialog';
+import TransactionItem from './TransactionItem';
 
 function TransactionList() {
     const { transactions } = useTransactionContext();
@@ -59,38 +60,28 @@ function TransactionList() {
                         <span className='text-gray-400'>{transactions.length} items</span>
                     </div>
 
-                    <table className='w-full text-center *:border-2 rounded'>
-                        <tr className='*:px-4 *:py-3 rounded-xl text-secundary'> 
-                            <th>DATE</th>
-                            <th>AMOUNT</th>
-                            <th>TYPE</th>
-                            <th>CATEGORY</th>
-                            <th>ACTION</th>
-                        </tr>
-
-                        {transactions.map((transaction) => (
-                            <tr key={transaction.id} className='*:px-4 *:py-4'>
-                                <td>{transaction.date.toLocaleString()}</td>
-                                <td>${transaction.amount}</td>
-
-                                <td className={
-                                        transaction.type === "income"
-                                            ? "text-green-500"
-                                            : transaction.type === "expense"
-                                                ? "text-red-500"
-                                                : "text-yellow-500" // Color para "debt"
-                                }> {transaction.type}
-                                
-                                </td>
-                                <td>{transaction.categoryName}</td>
-                                <td className='flex gap-4 items-center justify-center'>
-                                    <FiEdit className='cursor-pointer'/>
-                                    <FaRegTrashCan className='cursor-pointer'/>
-                                </td>
-                            </tr>
-                        ))}
-
-                    </table>
+                    <div className='flex flex-col gap-3'>
+                        <ContainerBox className="grid grid-cols-5  justify-items-center p-2 rounded-3xl bg-primary border-2 border-primary text-secundary">
+                            <span>DATE</span>
+                            <span>AMOUNT</span>
+                            <span>TYPE</span>
+                            <span>CATEGORY</span>
+                            <span>ACTION</span>
+                        </ContainerBox>
+                            {transactions.map((transaction) => (
+                                <TransactionItem
+                                    key={transaction.id}
+                                    id={transaction.id}
+                                    date={transaction.date}
+                                    amount={transaction.amount}
+                                    type={transaction.type}
+                                    editIcon={<FiEdit size={15} className="cursor-pointer"/>}
+                                    deleteIcon={<FaRegTrashCan size={15} className="cursor-pointer"/>}
+                                    categoryName={transaction.categoryName}
+                                    className='p-2 rounded-3xl border-primary border-2 items-center hover:bg-primary'
+                                />
+                            ))}
+                    </div>
                 </div>
             </ContainerBox>
         </div>

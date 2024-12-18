@@ -30,7 +30,7 @@ class TransactionModel {
             userId: currentUser.id,
             date: newTransactionData.date,
             type: newTransactionData.type,
-            categoryId: newTransactionData.category,
+            categoryId: newTransactionData.category || null,
             amount: newTransactionData.amount,
             description: newTransactionData.description
         }).returning();

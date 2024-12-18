@@ -21,7 +21,14 @@ type Transaction = {
     amount: number;
 }   
 
-export type { User, Transaction};
+type Category = {
+    id?: number;
+    userId: number;
+    name: string;
+    type: 'income' | 'debt' | 'expense'
+}
+
+export type { User, Transaction, Category };
 
 
 

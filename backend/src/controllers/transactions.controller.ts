@@ -6,6 +6,7 @@ import TransactionModel from "../models/Transaction.model";
 import HttpError from "../models/HttpErrors";
 import { ExtendedRequest, User } from "../config/types";
 import { transactionSchema } from "../schemas/transactionSchema";
+import CategoyModel from "../models/Categoy.model";
 
 async function getAllUserTransactions(req: ExtendedRequest, res: Response) {
     try {
@@ -31,7 +32,11 @@ async function createUserTransaction (req: ExtendedRequest, res: Response){
     try {
         //Recogida de datos
         const newTransactionData = req.body;
+        
+        
+        
         newTransactionData.userId = currentUser.id;
+        
 
         //Validación de la correcta estructura de transaction mediante zod
         const { success, data, error } = transactionSchema.safeParse(newTransactionData);
@@ -40,12 +45,22 @@ async function createUserTransaction (req: ExtendedRequest, res: Response){
         if (!success) throw new ValidationError(error);
 
         
+        
         const newTransactionResponse = await TransactionModel.createTransaction(data, currentUser);
+
+        const responseData: any = {
+            newTransaction: newTransactionResponse
+        }
+
+        if (newTransactionResponse.categoryId) {
+            const newTransactionCategoryName = await CategoyModel.getCateoryName(newTransactionResponse.categoryId);
+            responseData.categoryName = newTransactionCategoryName;
+        }
 
         if (!newTransactionResponse) throw new HttpError(404, 'Cannot create transactiion')
 
         // Llamada exitosa
-        res.status(201).json(newTransactionResponse)
+        res.status(201).json(responseData)
         
     } catch (error) {
         console.error('Error creating transaction:', error);

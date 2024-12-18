@@ -7,8 +7,10 @@ import { TbHelpHexagon } from "react-icons/tb";
 import { LuLogOut } from "react-icons/lu";
 import { MdOutlineCategory } from "react-icons/md";
 import ButtonLink from "./ui/custom/ButtonLink";
+import useUserContext from "../hooks/useUserContext";
 
 function Menu() {
+  const {logOut} = useUserContext();
   return (
     <nav className="flex flex-col mb-12 grow gap-2">
       <ButtonLink to="/dashboard" icon={<RxDashboard size={22} />}>
@@ -36,7 +38,7 @@ function Menu() {
       <ButtonLink to="/help" icon={<TbHelpHexagon size={22} />}>
         Help
       </ButtonLink>
-      <ButtonLink to="/log-out" icon={<LuLogOut size={22} />}>
+      <ButtonLink onClick={logOut} to="/log-out" icon={<LuLogOut size={22} />}>
         Log out
       </ButtonLink>
     </nav>

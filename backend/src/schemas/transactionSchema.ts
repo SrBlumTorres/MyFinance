@@ -28,12 +28,10 @@ const transactionSchema = z.object({
       .describe("Tipo de transacción: ingreso, deuda o gasto."),
   
     category: z
-      .coerce
       .number({
         invalid_type_error: "La categoría debe ser un número válido.",
       })
       .int("La categoría debe ser un número entero.")
-      .positive("La categoría debe ser un número positivo.")
       .optional()
       .describe("Categoría numérica de la transacción (opcional)."),
   

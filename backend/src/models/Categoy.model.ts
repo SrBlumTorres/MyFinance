@@ -16,6 +16,14 @@ class CategoryModel {
 
         return userCategories;
     }
+
+    async getCateoryName(categoryId: number) {
+        const [category] = await db.select({
+            categoryName: categories.name
+        }).from(categories).where(eq(categories.id, categoryId));
+
+        return category.categoryName;
+    }
 }
 
 export default new CategoryModel();

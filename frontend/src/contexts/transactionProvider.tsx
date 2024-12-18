@@ -35,6 +35,11 @@ function TransactionProvider({ children }: TransactionProviderProps) {
     );
   };
 
+  const removeTransaction = (id: number) => {
+    
+  };
+  const editTransaction = () => {};
+
   useEffect(() => {
     fetchTransactions();
   }, []);
@@ -44,6 +49,8 @@ function TransactionProvider({ children }: TransactionProviderProps) {
     transactions,
     fetchTransactions,
     addTransaction,
+    removeTransaction,
+    editTransaction
   };
 
   return (

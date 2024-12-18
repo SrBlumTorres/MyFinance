@@ -4,6 +4,7 @@ import LoginPage from "../pages/LoginPage"
 import TransactionsPage from "../pages/TransactionsPage"
 import PrivateRoute from "../components/PrivateRoute"
 import PublicRoute from "../components/PublicRoute"
+import CategoriesPage from "../pages/CategoriesPage"
 
 
 function AppRoutes() {
@@ -19,10 +20,13 @@ function AppRoutes() {
 
       //! Public 
       //! Private pasará primero por PrivateRoute
+      
       <Route element={ <PrivateRoute /> } >
         <Route path="/dashboard" element={<DashboardPage /> } />
         <Route path="/transactions" element={ <TransactionsPage /> } />
+        <Route path="/categories" element={ <CategoriesPage /> } />
       </Route>
+      
 
       //TODO 404 page
       <Route path="*" element={"No existe"} />

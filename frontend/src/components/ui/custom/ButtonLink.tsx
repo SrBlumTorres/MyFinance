@@ -1,5 +1,5 @@
 import { twMerge } from "tailwind-merge";
-import { ReactNode } from "react";
+import { HTMLAttributes, ReactNode } from "react";
 import { NavLink } from "react-router-dom";
 
 type ButtonLinkProps = {
@@ -7,10 +7,10 @@ type ButtonLinkProps = {
   children?: ReactNode;
   icon?: ReactNode;
   to: string;
-};
+} & HTMLAttributes<HTMLAnchorElement>;
 
 function ButtonLink(props: ButtonLinkProps) {
-  const { className, children, icon, to } = props;
+  const { className, children, icon, to, ...rest } = props;
 
   return (
     <NavLink
@@ -22,6 +22,7 @@ function ButtonLink(props: ButtonLinkProps) {
           className
         )
       }
+      {...rest}
     >
       <span className="transition-transform duration-500 group-hover:rotate-180">
         {icon}
